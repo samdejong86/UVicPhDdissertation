@@ -1,0 +1,82 @@
+\chapter{Simulation}
+\label{chap:Sim}
+
+	Simulation of the collider was done with a software package called Strategic Accelerator Design (SAD) \cite{SAD}, created at KEK specifically for simulating \epem colliders. SAD simulates the loss of particles from both the HER and LER beams, for beam-gas and beam-beam losses. The trajectory of particles lost at the IR are passed to the Belle~II Analysis Framework (BASF2) \cite{BASF2}. 
+
+	The information passed to BASF2 is propagated through the materials and detectors in the IR using GEANT4. GEANT4 simulates the interaction with detector materials, calculating the energy deposited in the detector materials. These energy deposits are converted into digitized signals using code specifically developed for each subdetector.
+
+\section{Scaling of Simulation}
+
+%discuss scaling of simulation to data. Need to understand better.
+
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ cccccccc }
+	Ring	& Current & Pressure 	& Z & N$_{\mathrm{bunch}}$	& $\sigma_y$ 		& emittance ($\varepsilon_x$) 	& $\varepsilon_y/\varepsilon_x$ \\
+		& (mA)	  & (nTorr)	&   & 				& ($\mu\mathrm{m}$)	& (mm$\times$mrad)	&  \\ \hline \hline
+	HER	& 1000		& 10			& 7 & 1000		& 59		& 4.45		& 0.1	\\
+	LER	& 1000		& 10			& 7 & 1000		& 110		& 1.92		& 0.1	\\	\hline
+	\end{tabular}
+	\caption[Nominal parameters of simulated beams]{Nominal parameters of simulated beams.}
+	\label{tab:SimBeam}
+\end{table}
+
+
+The SAD simulation was done with the beam parameters listed in Table \ref{tab:SimBeam}. 
+
+
+The beam-gas and beam-beam components of the background are simulated separately. Each component is then scaled to match the real beam parameters by re-weighting the SAD events by the scale value at that moment in time. The same SAD events are reused for all beam settings.
+
+The beam-gas component of the simulation is scaled by:
+\begin{equation}
+	{R_{\mathrm{BG}}^{\mathrm{Scaled}} = \sum _{i=1}^{12}(R^{\mathrm{Brems}}_i+R^{\mathrm{Coulomb}}_i)\cdot\frac{P_{\mathrm{scale}}(I\cdot P_i\cdot Z_{\mathrm{eff}~i}^{2})_{\mathrm{data}}} {(I\cdot P\cdot Z^{2})_{\mathrm{sim}}}}
+\end{equation}
+where $R^{\mathrm{Brems}}_{i}$ and $R^{\mathrm{Coulomb}}_{i}$ are the components of the inelastic and elastic beam-gas simulated rates produced at the IR from interaction at each `D' section of the HER and LER rings (see Fig \ref{fig:SKB}), $P_{i}$ is the pressure in each `D' section, and $Z_{\mathrm{eff}~i}$ is the effective atomic number of the gas in each section (see Eqn~\ref{eqn:ZEFF}), if available. If $Z_{\mathrm{eff}~i}$ is not available in a `D' section, 2.7 is used for the LER (since this was near the mean value of $Z$ during the experiment, see \S~\ref{sec:TousExp}), and 1 is used in the HER.  $P_{\mathrm{scale}}$ is a scale factor on the overall pressure to account for the fact that the measurement made by the uncalibrated pressure gauges is proportional to the actual pressure. This scale factor will be discussed further in \S~\ref{sec:TousExp}.
+
+The beam-beam component of the simulation is scaled by:
+\begin{equation}
+	{R_{\mathrm{Tous}}^{\mathrm{Scaled}} = R_{\mathrm{Tous}}\cdot\frac{(I^{2}/N_{\mathrm{Bunch}}\cdot\sigma_{y})_{\mathrm{data}} }{(I^{2}/N_{\mathrm{Bunch}}\cdot\sigma_{y})_{\mathrm{sim}}}}
+\end{equation}
+where $R_{\mathrm{Tous}}$ is the Touschek simulated rate, $\sigma_{y}$ is the beam size, and $N_{\mathrm{Bunch}}$ is the number of bunches in the ring.
+
+These scaled components are combined to get the re-weighted simulated rate:
+\begin{equation}
+	{R_{\mathrm{Sim}} = \varepsilon_{^3\mathrm{He}}\left(R_{\mathrm{BG}}^{\mathrm{Scaled}}+R_{\mathrm{Tous}}^{\mathrm{Scaled}}\right)}
+\end{equation}
+where $\varepsilon_{^3\mathrm{He}}$ is the efficiency in each \he tube, as shown in Table \ref{tab:he3Calib}. The scaling parameters for the beam-gas and beam-beam backgrounds are consistent with the discussion in Chapter \ref{chap:beamBack}.
+
+
+%In order to simulate the differing conditions of the machine studies, this simulation was scaled:
+%\begin{equation}
+%	{R = \varepsilon_{^3He}\left(\sum _{i=1}^{12}(R^{Brems}_i+R^{Coulomb}_i)\cdot\frac{P_{\mathrm{scale}}(I\cdot P_i\cdot Z_{i}^{2})_{data}} {(I\cdot P\cdot Z^{2})_{sim}}+R_{Tous}\cdot\frac{(I^{2}/N_{Bunch}\cdot\sigma_{y})_{data} }{(I^{2}/N_{Bunch}\cdot\sigma_{y})_{sim}}\right)}
+%\end{equation}
+% R$_{Tous}$ is the Touschek simulated rate. Finally, $\varepsilon_{^3He}$ is the efficiency in each \he tube, as shown in Table \ref{tab:he3Calib}. The scaling parameters are consistent with the discussion on Chapter \ref{chap:beamBack}
+
+In order to verify that these scale factors are appropriate, a SAD simulation was done at different beam parameters than listed in Table \ref{tab:SimBeam}. This was compared to a scaled version of the nominal simulation, which showed this scaling approach to be appropriate.
+
+
+
+\section{\He Tube simulation}
+
+	The \he tube geometry, which consists of a stainless steel cylinder 8$^{\verb+"+}$ long and 2$^{\verb+"+}$ in diameter, filled with $^3$He, is loaded into GEANT4. The GEANT4 physics list QGSP\_BERT\_HP (a hadronic model with a high precision neutron package) is used to determine if a neutron passing through the detector's sensitive volume is captured by an atom of $^3$He. When this occurs, a tritium and a proton are produced. These particles travel through simulated trajectories, and ionization sites in the $^3$He are generated. If the energy deposited in one of these sites is greater than the ionization energy of $^3$He (24.6 eV), the number of electrons generated is calculated by dividing the energy of the event by the ionization energy. This number is smeared by a Gaussian function, and converted to ADC counts. If this is above a certain threshold, the hit is counted toward the rate. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

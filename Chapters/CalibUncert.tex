@@ -1,0 +1,40 @@
+\chapter{Systematic errors on \He tube efficiency}
+\label{chap:calibUn}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ lrrr }
+			&	All points		&	First 5 points		&	Last 7 points		\\	\hline \hline
+	B		&	7.243	$\times10^{6}cm^2s^{-1}$	&	11.237	$\times10^{6}cm^2s^{-1}$	&	2.391	$\times10^{6}cm^2s^{-1}$	\\	
+$	r_{0}	$	&	0.400	cm	&	-7.862	cm	&	49.086	cm	\\	
+	C		&	107.856	Hz	&	148.731	Hz	&	133.724	Hz	\\	
+$	A_{0}	$	&	0.278		&	0.194		&	0.340		\\	
+$	A_{1}	$	&	0.282		&	0.203		&	0.341		\\	
+$	A_{2}	$	&	0.154		&	0.115		&	0.184		\\	
+$	A_{3}	$	&	0.201		&	0.148		&	0.240		\\	
+$	A_{Sim}	$	&	1.000		&	1.000		&	1.000		\\	
+$	C_{2}	$	&	100.455	Hz	&	-86.851	Hz	&	154.101	Hz	\\	\hline
+
+	\end{tabular}
+	\caption{Fit parameters for calibration fits}
+	\label{tab:CalibrationFitPars}
+\end{table}
+
+
+
+
+\begin{figure}
+	\centering
+	\subfigure[First 5 points only]{
+		\begin{overpic}[width=\textwidth]{images/first5points}
+		\end{overpic}
+		\label{fig:he3rateVsDfirst5}
+	}
+	\subfigure[Last 7 points only]{
+		\begin{overpic}[width=\textwidth]{images/last7points}
+		\end{overpic}
+		\label{fig:he3rateVsDlast7}
+	}
+	\caption{\He tube rate vs distance from thermal neutron source, reduced points}
+	\label{fig:he3rateVsDReduced}
+\end{figure}

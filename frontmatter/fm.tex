@@ -1,0 +1,56 @@
+\newcommand\thesistitle{Study of Thermal Neutron Flux from SuperKEKB \\in the Belle II Commissioning Detector}
+% One needs to make adjustments for a Master's Thesis
+\newcommand\nameanddegrees{%
+Samuel Rudy de Jong\\
+B.Sc., Carleton University, 2010\\
+M.Sc., University of Victoria, 2012}
+\newcommand\panel{%
+\HRule\\\panelist{Dr. J. Michael Roney}{Supervisor}{Department of Physics and Astronomy}
+\HRule\\\panelist{Dr. Robert Kowalewski}{Departmental Member}{Department of Physics and Astronomy}
+\HRule\\\panelist{Dr. Michel Lefebvre}{Departmental Member}{Department of Physics and Astronomy}
+\HRule\\\panelist{Dr. Colin Bradley}{Outside Member}{Department of Mechanical Engineering}}
+%\HRule\\\panelist{Dr. \Ans{Current Unknown}}{Additional Member}{Department of \Ans{Current Unknown Department}}}
+% Titlepage break
+\newcommand\tpbreak{\\[\baselineskip]}
+
+\newpage
+% Suppress numbers on the first page
+\thispagestyle{empty}
+
+% Header Footer Setup (for Front matter)
+\pagestyle{myheadings}
+\pagenumbering{roman}
+% We use this in addition to the default \LaTeX page configuration routines
+% because we have no way of saying \thispagestyle after the glossary and bibliography starts.
+\fancypagestyle{plain}{%
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+% Front Matter
+\input frontmatter/tp
+\input frontmatter/sc
+\input frontmatter/abs
+\TOCadd{Table of Contents}\tableofcontents
+\TOCadd{List of Tables}\listoftables
+%\setcounter{lofdepth}{2}
+\TOCadd{List of Figures}\listoffigures
+\input frontmatter/ack
+\input frontmatter/ded
+\newpage
+\input frontmatter/preface
+
+% Header Footer Setup
+\newpage
+\pagestyle{myheadings}
+\pagenumbering{arabic}
+% We use this in addition to the default LaTeX page configuration routines
+% because we have no way of saying \thispagestyle after the bibliography starts.
+\fancypagestyle{plain}{%
+\fancyhf{}
+\fancyhead[R]{\ifnum\thepage=1\relax\else\thepage\fi}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}

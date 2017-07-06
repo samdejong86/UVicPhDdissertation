@@ -1,0 +1,144 @@
+%\pdfminorversion=5
+\documentclass[12pt,oneside]{book}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage{morefloats}
+\usepackage[hyphenbreaks]{breakurl}
+\PassOptionsToPackage{subfigure}{tocloft}
+\usepackage{fixmetodonotes}
+%\usepackage[firstpage]{draftwatermark}
+\usepackage{siunitx}
+
+
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[percent]{overpic}
+\usepackage{xcolor,varwidth}
+\usepackage[toc,page]{appendix}
+\include{macros/style}
+\include{macros/use_packages}
+
+
+\usepackage{sectsty}
+\usepackage{titlecaps}
+%\let\svsection\section
+%\def\section#1{\svsection{\titlecap{#1}}}
+
+%\let\svsubsection\subsection
+%\def\subsection#1{\svsubsection{\titlecap{#1}}}
+
+%\SetWatermarkText{Revised \today}
+%\SetWatermarkFontSize{2cm}
+
+\Addlcwords{my for an in on the of to due and}
+
+\allsectionsfont{\titlecap}
+
+
+%\let\svcaption\caption
+%\def\caption#1{\svcaption{\titlecap{#1}}}
+
+
+\makeatletter
+\let\stdchapter\chapter
+\renewcommand*\chapter{%
+  \@ifstar{\starchapter}{\@dblarg\nostarchapter}}
+\newcommand*\starchapter[1]{\stdchapter*{\titlecap{#1}}}
+\def\nostarchapter[#1]#2{\stdchapter[{\titlecap{#1}}]{#2}}
+\makeatother
+
+\makeatletter
+\let\stdsection\section
+\renewcommand*\section{%
+  \@ifstar{\starsection}{\@dblarg\nostarsection}}
+\newcommand*\starsection[1]{\stdsection*{\titlecap{#1}}}
+\def\nostarsection[#1]#2{\stdsection[{\titlecap{#1}}]{#2}}
+\makeatother
+
+
+\makeatletter
+\let\stdsubsection\subsection
+\renewcommand*\subsection{%
+  \@ifstar{\starsubsection}{\@dblarg\nostarsubsection}}
+\newcommand*\starsubsection[1]{\stdsubsection*{\titlecap{#1}}}
+\def\nostarsubsection[#1]#2{\stdsubsection[{\titlecap{#1}}]{#2}}
+\makeatother
+
+\makeatletter
+\let\stdsubsubsection\subsubsection
+\renewcommand*\subsubsection{%
+  \@ifstar{\starsubsubsection}{\@dblarg\nostarsubsubsection}}
+\newcommand*\starsubsubsection[1]{\stdsubsubsection*{\titlecap{#1}}}
+\def\nostarsubsubsection[#1]#2{\stdsubsubsection[{\titlecap{#1}}]{#2}}
+\makeatother
+
+
+%\def\chapter#1{\svchapter{#1}}
+
+\begin{document}
+
+\makeatletter
+\newcommand*{\centerfloat}{%
+  \parindent \z@
+  \leftskip \z@ \@plus 1fil \@minus \textwidth
+  \rightskip\leftskip
+  \parfillskip \z@skip}
+\makeatother
+
+\newcommand\epem{e$^+$e$^-$~}
+\newcommand\he{helium-3~}
+\newcommand\He{Helium-3~}
+
+
+% Front Matter
+\input frontmatter/fm
+
+\newpage
+
+\input{Chapters/Introduction}
+
+\input{Chapters/BelleIIDetector}
+\input{Chapters/BEAST}
+\input{Chapters/He3tube}
+\input{Chapters/beamBack}
+
+\input{Chapters/MachineStudies}
+\input{Chapters/Simulation}
+
+\input{Chapters/Analysis}
+%\input{Chapters/Results}
+
+\input{Chapters/ConsequencesBelle}
+
+\input{Chapters/Conclusion}
+
+
+% The style of bibliography exemplified here is the "plain",
+% normally used in science theses. This is shown
+% by the entry {plain} below. Substitute the
+% appropriate bibliography style. See also the
+% PDF file "InformationOnBibliographyStyles" in this
+% directory for more choices.
+
+% The Bibliography file is a BibTex file named
+% UVicThesis.bib and called below
+
+	\TOCadd{Bibliography}
+	\bibliographystyle{unsrt}
+	\bibliography{References}
+
+
+	\appendix
+
+%\input{Chapters/AmBeSpec}
+%\input{Chapters/CalibUncert}
+%\input{Chapters/miscData}
+%\input{Chapters/NeutronFluxInBelle}
+\input{Chapters/ThetaID}
+\input{Chapters/Specs}
+
+
+\end{document}
